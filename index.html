@@ -1,118 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hello World</title>
-  <style>
-    html, body {
-      height: 90%;
-      margin: 0; /* Fixed margin on html/body */
-    }
-    body {
-      display: grid;
-      place-items: center;
-      margin: 10px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-      background: #3e0014;
-      color: #eaceaa;
-    }
-    h1 {
-      font-size: clamp(0.5rem, 6vw, 4rem);
-      line-height: 0.5;
-      margin: 0;
-      text-align: center;
-    }
-    .header {
-      margin-bottom: -100px;
-      padding: 0;
-    }
-    .bio {
-      margin-top: 100px;
-      max-width: 60ch;
-      text-align: center;
-      line-height: 1.6;
-      color: #cbd5e1;
-    }
-    .avatar {
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .avatar img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 2px solid #334155;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    .actions {
-      margin-top: 12px;
-      text-align: center;
-    }
-    .button {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background: #1e293b;
-      color: #e2e8f0;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .button:hover { background: #051a39; }
-    .socials {
-      margin-top: 50px;
-      text-align: center;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .socials a {
-      color: #93c5fd;
-      text-decoration: none;
-      border-bottom: 1px dashed transparent;
-    }
-    .socials a:hover { border-bottom-color: #93c5fd; }
-  </style>
-  <meta name="description" content="A tiny page that prints a greeting.">
-  <meta name="color-scheme" content="dark light">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
 </head>
 <body>
-  <section class="avatar" aria-label="Profile photo">
-    <img src="https://media.licdn.com/dms/image/v2/D5635AQH1_qG9yA03DA/profile-framedphoto-shrink_400_400/B56ZsH7knfG4Ac-/0/1765364616029?e=1767088800&v=beta&t=IBE0DFGwf3dTN9rzwTfEEC8sxoIyKZNsPloJZ_QYS_Q" alt="Profile photo of Kavyashri K R" />
-  </section>
-  <section class="header" aria-label="Header">
-    <h1 id="greeting">Kavyashri K R</h1>
-  </section>
-  <section class="bio" aria-label="Bio">
-    <p>Developer @RealDevSquad @TeamShiksha | Freelance Developer | Reads books about tech, startups, spirituality</p>
-  </section>
-  <section class="actions" aria-label="Actions">
-    <a class="button" href="https://cal.com/aravindc/30min?overlayCalendar=true" aria-label="Book meeting">Book meeting</a>
-  </section>
-  <nav class="socials" aria-label="Social links">
-    <a href="https://x.com/kavyashrikr" target="_blank" rel="noopener noreferrer" aria-label="Twitter">Twitter</a>
-    <a href=" https://www.linkedin.com/in/kavyashri-k-r-60675926a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
-    <a href=" https://github.com/kavyashri217" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
-    <a href="https://www.instagram.com/kavyashri01" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
-  </nav>
-  <script>
-    (function () {
-      function getNameFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        const raw = params.get('name');
-        return raw && raw.trim() ? raw.trim() : null;
-      }
-      function setGreetingFromUrl() {
-        const name = getNameFromUrl() || 'Kavyashri K R';
-        const heading = document.getElementById('greeting');
-        if (heading) heading.textContent = name;
-        document.title = name;
-      }
-      setGreetingFromUrl();
-    })();
-  </script>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header>
+        <h1>Book Your Meeting</h1>
+        <button id="theme-toggle">Toggle Theme</button>
+    </header>
+    <main id="main-content">
+        <section>
+            <h2>Share This Page</h2>
+            <button id="share-btn">Share</button>
+            <div id="share-modal" class="modal">
+                <h3>Share This Meeting</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Share on Facebook"><img src="facebook-icon.png" alt="Facebook"></a>
+                    <a href="#" class="social-link" aria-label="Share on Twitter"><img src="twitter-icon.png" alt="Twitter"></a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Meeting Details</h2>
+            <p>Book your meeting seamlessly.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Meeting Booking</p>
+    </footer>
 </body>
 </html>
+
+<script>
+class ThemeManager {
+    // Theme management code goes here
+}
+class Toast {
+    // Toast notification code implementation
+}
+class Modal {
+    // Modal management functionality
+}
+class URLUtility {
+    // Utility functions for URL handling
+}
+class Analytics {
+    // Tracking analytics for user interaction
+}
+class SocialTracker {
+    // Track social sharing interactions
+}
+class ButtonTracker {
+    // Track button clicks
+}
+class ShareManager {
+    // Manage the sharing functionality
+}
+</script>
