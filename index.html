@@ -3,62 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meeting Booking</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
+    <meta name="description" content="Book a meeting with Kavyashri K R">
+    <title>Book Meeting - Kavyashri K R</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f5f5f5;
+            --text: #333;
+            --accent: #009688;
+            --border: #ddd;
+        }
+
+        body.dark {
+            --bg: #1a1a1a;
+            --text: #f5f5f5;
+            --border: #444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        header {
+            background: var(--accent);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark section {
+            background: #2a2a2a;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        section h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        button, .btn {
+            padding: 12px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover, .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,118,120,0.3);
+        }
+
+        .socials {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            padding: 10px 16px;
+            background: var(--border);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg);
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        body.dark .modal-content {
+            background-color: #2a2a2a;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+        }
+
+        body.dark .form-group input {
+            background: #1a1a1a;
+            color: #f5f5f5;
+            border-color: #444;
+        }
+
+        /* Toast */
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            z-index: 999;
+            animation: slideUp 0.3s ease;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--accent);
+            color: white;
+            margin-top: 40px;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button, .btn {
+                width: 100%;
+            }
+
+            section {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+
+    <!-- Header -->
     <header>
-        <h1>Book Your Meeting</h1>
-        <button id="theme-toggle">Toggle Theme</button>
+        <h1>📅 Book Your Meeting</h1>
+        <p class="header-subtitle">Schedule a meeting with Kavyashri K R</p>
     </header>
-    <main id="main-content">
+
+    <!-- Main Content -->
+    <main>
+        <!-- Share Section -->
         <section>
-            <h2>Share This Page</h2>
-            <button id="share-btn">Share</button>
-            <div id="share-modal" class="modal">
-                <h3>Share This Meeting</h3>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="Share on Facebook"><img src="facebook-icon.png" alt="Facebook"></a>
-                    <a href="#" class="social-link" aria-label="Share on Twitter"><img src="twitter-icon.png" alt="Twitter"></a>
-                </div>
+            <h2>🔗 Share Profile</h2>
+            <p>Generate a custom link with a personalized greeting and share it with others.</p>
+            <div class="button-group">
+                <button id="shareBtn">Share Profile</button>
+                <a href="https://cal.com/aravindc/30min?overlayCalendar=true" class="btn" target="_blank">Book Meeting</a>
             </div>
         </section>
+
+        <!-- About Section -->
         <section>
-            <h2>Meeting Details</h2>
-            <p>Book your meeting seamlessly.</p>
+            <h2>👤 About</h2>
+            <p>Developer @RealDevSquad @TeamShiksha | Freelance Developer | Reads books about tech, startups, spirituality</p>
+        </section>
+
+        <!-- Connect Section -->
+        <section>
+            <h2>🌐 Connect</h2>
+            <p>Follow me on social media:</p>
+            <nav class="socials">
+                <a href="https://x.com/kavyashrikr" target="_blank" rel="noopener noreferrer" class="social-link">𝕏 Twitter</a>
+                <a href="https://www.linkedin.com/in/kavyashri-k-r-60675926a" target="_blank" rel="noopener noreferrer" class="social-link">💼 LinkedIn</a>
+                <a href="https://github.com/kavyashri217" target="_blank" rel="noopener noreferrer" class="social-link">🐙 GitHub</a>
+                <a href="https://www.instagram.com/kavyashri01" target="_blank" rel="noopener noreferrer" class="social-link">📸 Instagram</a>
+            </nav>
         </section>
     </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Share Your Profile</h2>
+            <p>Generate a custom link with a personalized greeting:</p>
+            
+            <div class="form-group">
+                <label for="customName">Custom Name:</label>
+                <input type="text" id="customName" placeholder="Enter name (e.g., John Doe)">
+            </div>
+
+            <div class="button-group">
+                <button id="generateBtn">Generate Link</button>
+                <button id="copyBtn">Copy Link</button>
+            </div>
+
+            <div class="form-group">
+                <label for="shareUrl">Share Link:</label>
+                <input type="text" id="shareUrl" readonly placeholder="Your shareable link will appear here">
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Meeting Booking</p>
+        <p>&copy; 2026 Kavyashri K R | All rights reserved</p>
     </footer>
+
+    <script>
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('themeToggle');
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        if (isDarkMode) {
+            document.body.classList.add('dark');
+            themeToggle.textContent = '☀️ Light';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+            themeToggle.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+            showToast('Theme changed! ' + (isDark ? '🌙' : '☀️'));
+        });
+
+        // ===== TOAST NOTIFICATIONS =====
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ===== MODAL MANAGEMENT =====
+        const shareModal = document.getElementById('shareModal');
+        const shareBtn = document.getElementById('shareBtn');
+        const closeModal = document.getElementById('closeModal');
+
+        shareBtn.addEventListener('click', () => {
+            shareModal.classList.add('show');
+            document.getElementById('customName').focus();
+        });
+
+        closeModal.addEventListener('click', () => {
+            shareModal.classList.remove('show');
+        });
+
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) {
+                shareModal.classList.remove('show');
+            }
+        });
+
+        // ===== SHARE FUNCTIONALITY =====
+        const generateBtn = document.getElementById('generateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const customNameInput = document.getElementById('customName');
+        const shareUrlInput = document.getElementById('shareUrl');
+
+        generateBtn.addEventListener('click', () => {
+            const name = customNameInput.value.trim();
+            if (!name) {
+                showToast('❌ Please enter a name');
+                return;
+            }
+            const url = `${window.location.href}?name=${encodeURIComponent(name)}`;
+            shareUrlInput.value = url;
+            showToast('✅ Link generated! Copy and share it.');
+        });
+
+        copyBtn.addEventListener('click', () => {
+            if (!shareUrlInput.value) {
+                showToast('❌ Generate a link first');
+                return;
+            }
+            navigator.clipboard.writeText(shareUrlInput.value).then(() => {
+                showToast('📋 Link copied to clipboard!');
+            }).catch(() => {
+                showToast('❌ Failed to copy');
+            });
+        });
+
+        // ===== ANALYTICS =====
+        function trackEvent(eventName) {
+            const events = JSON.parse(sessionStorage.getItem('events') || '[]');
+            events.push({
+                name: eventName,
+                timestamp: new Date().toISOString()
+            });
+            sessionStorage.setItem('events', JSON.stringify(events));
+            console.log('📊 Event tracked:', eventName);
+        }
+
+        // Track page load
+        trackEvent('page_loaded');
+
+        // Track social clicks
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('click', () => {
+                trackEvent(`social_click_${link.textContent.trim()}`);
+            });
+        });
+
+        // Allow Enter key to generate link
+        customNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateBtn.click();
+            }
+        });
+
+        // Welcome message
+        showToast('👋 Welcome! Click Share Profile to get started.');
+    </script>
 </body>
 </html>
-
-<script>
-class ThemeManager {
-    // Theme management code goes here
-}
-class Toast {
-    // Toast notification code implementation
-}
-class Modal {
-    // Modal management functionality
-}
-class URLUtility {
-    // Utility functions for URL handling
-}
-class Analytics {
-    // Tracking analytics for user interaction
-}
-class SocialTracker {
-    // Track social sharing interactions
-}
-class ButtonTracker {
-    // Track button clicks
-}
-class ShareManager {
-    // Manage the sharing functionality
-}
-</script>
