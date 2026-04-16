@@ -1,0 +1,480 @@
+/* ============================================
+   VARIABLES & THEMES
+   ============================================ */
+:root {
+  --color-primary: #3e0014;
+  --color-secondary: #1e293b;
+  --color-text: #eaceaa;
+  --color-text-alt: #cbd5e1;
+  --color-accent: #93c5fd;
+  --color-border: #334155;
+  --color-bg-hover: #051a39;
+  
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 24px;
+  --spacing-lg: 50px;
+  --spacing-xl: 100px;
+  
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+  
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 50%;
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Light Theme */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-primary: #f5f5f5;
+    --color-secondary: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-alt: #4a5568;
+    --color-accent: #2563eb;
+    --color-border: #e2e8f0;
+    --color-bg-hover: #e5e7eb;
+  }
+}
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  margin: var(--spacing-xs);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  background: var(--color-primary);
+  color: var(--color-text);
+  transition: background-color var(--transition-base), color var(--transition-base);
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+h1 {
+  font-size: clamp(0.5rem, 6vw, 4rem);
+  line-height: 0.5;
+  margin: 0;
+  text-align: center;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+p {
+  margin: 0;
+}
+
+/* ============================================
+   LAYOUT SECTIONS
+   ============================================ */
+.header {
+  margin-bottom: -100px;
+  padding: 0;
+}
+
+.bio {
+  margin-top: var(--spacing-xl);
+  max-width: 60ch;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--color-text-alt);
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* ============================================
+   AVATAR
+   ============================================ */
+.avatar {
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+  animation: fadeIn 0.6s ease-out 0.1s both;
+}
+
+.avatar img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.avatar img:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.avatar img:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* ============================================
+   BUTTONS & ACTIONS
+   ============================================ */
+.actions {
+  margin-top: var(--spacing-sm);
+  text-align: center;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-secondary);
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.button:hover {
+  background: var(--color-bg-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.button.secondary:hover {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+
+/* ============================================
+   SOCIAL LINKS
+   ============================================ */
+.socials {
+  margin-top: var(--spacing-lg);
+  text-align: center;
+  display: flex;
+  gap: var(--spacing-xs);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+.socials a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: all var(--transition-base);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.socials a:hover {
+  border-bottom-color: var(--color-accent);
+  background: rgba(147, 197, 253, 0.1);
+}
+
+.socials a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   THEME TOGGLE
+   ============================================ */
+.theme-toggle {
+  position: fixed;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all var(--transition-base);
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  background: var(--color-bg-hover);
+  transform: scale(1.1);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+.toast {
+  position: fixed;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  background: var(--color-secondary);
+  color: var(--color-text);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid var(--color-accent);
+  animation: slideInUp 0.3s ease-out;
+  z-index: 999;
+  max-width: 300px;
+}
+
+.toast.success {
+  border-left-color: #10b981;
+}
+
+.toast.error {
+  border-left-color: #ef4444;
+}
+
+.toast.info {
+  border-left-color: #3b82f6;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   MODAL / DIALOG
+   ============================================ */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  place-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal.active {
+  display: grid;
+}
+
+.modal-content {
+  background: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  max-width: 500px;
+  width: 90%;
+  animation: slideUp 0.3s ease-out;
+  box-shadow: var(--shadow-md);
+}
+
+.modal-content h2 {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.modal-close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text-alt);
+  transition: color var(--transition-base);
+}
+
+.modal-close:hover {
+  color: var(--color-text);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+
+  .socials {
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+  }
+
+  .avatar img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .modal-content {
+    padding: var(--spacing-md);
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    margin: var(--spacing-xs);
+  }
+
+  h1 {
+    font-size: clamp(0.5rem, 5vw, 2rem);
+  }
+
+  .avatar img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .toast {
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+    max-width: 90%;
+  }
+}
+
+/* Print styles */
+@media print {
+  .theme-toggle,
+  .actions,
+  .socials {
+    display: none;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}
